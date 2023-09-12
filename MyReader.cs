@@ -21,7 +21,6 @@ namespace Closhure
                 {
                     lineBuffer = reader.ReadLine();
                     if (lineBuffer == null) return -1;
-                    if (lineBuffer == "") continue;
                     break;
                 }
                 lineBuffer += '\n';
@@ -37,7 +36,6 @@ namespace Closhure
                 {
                     lineBuffer = reader.ReadLine();
                     if (lineBuffer == null) return -1;
-                    if (lineBuffer == "") continue;
                     break;
                 }
                 lineBuffer += '\n';
