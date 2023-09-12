@@ -634,7 +634,8 @@ namespace Closhure
                 switch (args.Count)
                 {
                     case 0:
-                        return Core.parse(Console.In);
+                        //return Core.parse(Console.In); // bugged
+                        return Core.parse(new MyReader(Console.In));
                     case 1:
                         return Core.parse((TextReader)args[0]);
                     default:
