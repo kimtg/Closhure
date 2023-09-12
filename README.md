@@ -168,7 +168,7 @@ Process is terminated due to StackOverflowException.
 ```
 
 ### Scope ###
-`doseq`, `fn`, `let`, `loop`, `thread` make new scope.
+`doseq`, `fn`, `let`, `loop` make new scope.
 
 ### List ###
 ```
