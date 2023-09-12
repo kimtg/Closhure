@@ -210,10 +210,6 @@ System.Math
 3
 > (. true ToString)
 "True"
-> (def i 3)
-3
-> (. i doubleValue)
-3.0
 > [(. System.Math -PI) System.Math/PI]
 (3.14159265358979 3.14159265358979)
 > (. Closhure.Core -testField)
