@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace Closhure
 {
-
     public class Recur : Exception
     {
         private const long serialVersionUID = 1L;
@@ -20,5 +19,4 @@ namespace Closhure
             return "recur is used outside a fn or a loop";
         }
     }
-
 }

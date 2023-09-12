@@ -16,7 +16,7 @@ namespace Closhure
 {
     public sealed class Core
     {
-        public const string VERSION = "0.1";
+        public const string VERSION = "0.2";
 
         // no instance
         private Core()
@@ -459,6 +459,7 @@ namespace Closhure
 
         internal static object eval(object n, Environment env)
         {
+        startEval:
             if (n is Symbol)
             {
                 object r = env.get(((Symbol)n).code);
@@ -576,7 +577,11 @@ namespace Closhure
                         object cond = expr[1];
                         if (Core.booleanValue(eval(cond, env)))
                         {
-                            return eval(expr[2], env);
+                            // return eval(expr[2], env);
+
+                            // tail-call optimization
+                            n = expr[2];
+                            goto startEval;
                         }
                         else
                         {
@@ -584,7 +589,11 @@ namespace Closhure
                             {
                                 return null;
                             }
-                            return eval(expr[3], env);
+                            //return eval(expr[3], env);
+
+                            // tail-call optimization
+                            n = expr[3];
+                            goto startEval;
                         }
                     }
                     else if (code == sym_quote.code)
@@ -613,7 +622,11 @@ namespace Closhure
                         {
                             eval(expr[i], env);
                         }
-                        return eval(expr[last], env);
+                        //return eval(expr[last], env);
+
+                        // tail-call optimization
+                        n = expr[last];
+                        goto startEval;
                     }
                     else if (code == sym__dot.code)
                     {
