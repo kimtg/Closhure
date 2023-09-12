@@ -2,6 +2,18 @@
 
 Closhure is a dialect of Lisp. It is designed to be an embedded language (minimal Lisp for .NET Framework). It uses Clojure-like syntax.
 
+## Influenced by
+[Clojure](https://clojure.org/), [Javelin](https://github.com/kimtg/Javelin), [Schemy](https://github.com/microsoft/schemy)
+
+## Influenced
+[Javelin](https://github.com/kimtg/Javelin)
+
+## Key learnings
+1. Lisp interpreter
+2. Reflection
+3. Multi-line input
+4. Tail call optimization
+
 ## Target ##
 .NET Framework
 
