@@ -55,6 +55,7 @@
     <Compile Include="MyReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Recur.cs" />
+    <Compile Include="ReifyProxy.cs" />
     <Compile Include="Symbol.cs" />
     <Compile Include="UserFn.cs" />
   </ItemGroup>

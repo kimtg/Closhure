@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -16,7 +17,7 @@ namespace Closhure
 {
     public sealed class Core
     {
-        public const string VERSION = "0.2.2";
+        public const string VERSION = "0.2.3b";
 
         // no instance
         private Core()
@@ -881,7 +882,17 @@ namespace Closhure
                         // (str (reify object
                         //   (ToString [this] "foo")))
 
-                        throw new Exception("not implemented");
+                        //throw new Exception("not implemented");
+
+                        // currently bugged
+                        Type interfaceType = getClass(expr[1].ToString());
+                        var methods = new Dictionary<string, UserFn>();
+                        for (int i = 2; i < expr.Count; i++)
+                        {
+                            List<object> methodDef = (List<object>)expr[i];
+                            methods.Add(methodDef[0].ToString(), new UserFn(new List<object>(methodDef.Skip(1)), env));
+                        }
+                        return ReifyProxy.Create(interfaceType, methods);
                     }
                     else if (code == sym_recur.code) // (recur ARG ...)
                     {
