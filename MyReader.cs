@@ -17,12 +17,8 @@ namespace Closhure
         {
             if (lineBuffer == "")
             {
-                while (true)
-                {
-                    lineBuffer = reader.ReadLine();
-                    if (lineBuffer == null) return -1;
-                    break;
-                }
+                lineBuffer = reader.ReadLine();
+                if (lineBuffer == null) return -1;
                 lineBuffer += '\n';
             }
             return lineBuffer[0];
@@ -32,16 +28,12 @@ namespace Closhure
         {
             if (lineBuffer == "")
             {
-                while (true)
-                {
-                    lineBuffer = reader.ReadLine();
-                    if (lineBuffer == null) return -1;
-                    break;
-                }
+                lineBuffer = reader.ReadLine();
+                if (lineBuffer == null) return -1;
                 lineBuffer += '\n';
             }
             int v = lineBuffer[0];
-            lineBuffer = lineBuffer.Substring(1);
+            lineBuffer = lineBuffer.Substring(1); // advance the position
             return v;
         }
     }
