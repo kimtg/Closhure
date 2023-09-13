@@ -220,6 +220,8 @@ System.Math
 1.0
 > (. "abc" -Length) ; object's property
 3
+> (. "abc" get_Length) ; also object's property (C#'s feature)
+3
 > (. true ToString)
 "True"
 > [(. System.Math -PI) System.Math/PI]
