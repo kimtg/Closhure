@@ -236,6 +236,8 @@ abc
 3
 > [Closhure.Core/testProperty (. Closhure.Core -testProperty)]
 (3 3)
+> (str (reify Object (ToString [this] (str "reified object: " this))))
+"reified object: System.Object"
 ```
 
 See the source code for details.

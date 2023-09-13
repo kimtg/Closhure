@@ -1,23 +1,18 @@
-﻿using Closhure;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Net;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
-using System.Windows.Forms;
 
 namespace Closhure
 {
     public sealed class Core
     {
-        public const string VERSION = "0.2.3b";
+        public const string VERSION = "0.2.4";
 
         // no instance
         private Core()
@@ -879,11 +874,9 @@ namespace Closhure
                         // interface declarations.
                         //
                         // Example:
-                        // (str (reify Object (ToString [this] "foo")))
+                        // > (str (reify Object (ToString [this] (str "reified object: " this))))
+                        // "reified object: System.Object"
 
-                        //throw new Exception("not implemented");
-
-                        // currently bugged
                         Type interfaceType = getClass(expr[1].ToString());
                         var methods = new Dictionary<string, UserFn>();
                         for (int i = 2; i < expr.Count; i++)
@@ -891,7 +884,7 @@ namespace Closhure
                             List<object> methodDef = (List<object>)expr[i];
                             methods.Add(methodDef[0].ToString(), new UserFn(new List<object>(methodDef.Skip(1)), env));
                         }
-                        return ReifyProxy.Create(interfaceType, methods);
+                        return ReifyProxy.Create(Activator.CreateInstance(interfaceType), methods);
                     }
                     else if (code == sym_recur.code) // (recur ARG ...)
                     {
