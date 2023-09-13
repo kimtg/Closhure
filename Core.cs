@@ -12,7 +12,7 @@ namespace Closhure
 {
     public sealed class Core
     {
-        public const string VERSION = "0.2.5";
+        public const string VERSION = "0.3";
 
         // no instance
         private Core()
@@ -835,11 +835,7 @@ namespace Closhure
                             { // e.g. System.Math
                                 string s = x.ToString();
                                 lastImport = getClass(s);
-                                if (lastImport != null)
-                                {
-                                    getClassCache[lastImport.Name] = lastImport;
-                                }
-                                else
+                                if (lastImport == null) // not a class (e.g. System)
                                 {
                                     if (!imports.Contains(s))
                                     {
@@ -855,7 +851,7 @@ namespace Closhure
                                 {
                                     string s = xl[j].ToString();
                                     lastImport = getClass(prefix + "." + s);
-                                    getClassCache.Add(s, lastImport);
+                                    getClassCache[s] = lastImport;
                                 }
                             }
                             else
@@ -1068,7 +1064,7 @@ namespace Closhure
                 Type value = Type.GetType(className);
                 if (value != null)
                 {
-                    getClassCache.Add(className, value);
+                    getClassCache[className] = value;
                     return value;
                 }
                 else
@@ -1078,7 +1074,7 @@ namespace Closhure
                         Type value1 = Type.GetType(prefix + "." + className);
                         if (value1 != null)
                         {
-                            getClassCache.Add(className, value1);
+                            getClassCache[className] = value1;
                             return value1;
                         }
                         else
