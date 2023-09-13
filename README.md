@@ -235,7 +235,7 @@ nil
 1
 > (set! Closhure.Core/testField "abc")
   Closhure.Core/testField
-abc
+"abc"
 > (set! (. Closhure.Core -testProperty) 3)
 3
 > [Closhure.Core/testProperty (. Closhure.Core -testProperty)]

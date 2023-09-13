@@ -12,7 +12,7 @@ namespace Closhure
 {
     public sealed class Core
     {
-        public const string VERSION = "0.3";
+        public const string VERSION = "0.3.1";
 
         // no instance
         private Core()
@@ -736,63 +736,55 @@ namespace Closhure
                     {
                         // host interoperability
                         // (new CLASS ARG ...) ; create new host object
+
+                        string className = expr.ElementAt(1).ToString();
+                        Type cls = getClass(className);
+                        Type[] parameterTypes = new Type[expr.Count - 2];
+                        List<object> parameters = new List<object>();
+                        int last = expr.Count - 1;
+                        for (int i = 2; i <= last; i++)
+                        {
+                            object a = eval(expr.ElementAt(i), env);
+                            object param = a;
+                            parameters.Add(param);
+                            Type paramClass;
+
+                            if (param == null)
+                            {
+                                paramClass = null;
+                            }
+                            else
+                            {
+                                paramClass = param.GetType();
+                            }
+                            parameterTypes[i - 2] = paramClass;
+                        }
+
                         try
                         {
-                            string className = expr.ElementAt(1).ToString();
-                            Type cls = getClass(className);
-                            Type[] parameterTypes = new Type[expr.Count - 2];
-                            List<object> parameters = new List<object>();
-                            int last = expr.Count - 1;
-                            for (int i = 2; i <= last; i++)
+                            System.Reflection.ConstructorInfo c = cls.GetConstructor(parameterTypes);
+                            return c.Invoke(parameters.ToArray());
+                        }
+                        catch (TargetException)
+                        {
+                            foreach (System.Reflection.ConstructorInfo c in cls.GetConstructors())
                             {
-                                object a = eval(expr.ElementAt(i), env);
-                                object param = a;
-                                parameters.Add(param);
-                                Type paramClass;
-
-                                if (param == null)
+                                // find a constructor with the same number of parameters
+                                if (c.GetParameters().Length == expr.Count - 2)
                                 {
-                                    paramClass = null;
-                                }
-                                else
-                                {
-                                    paramClass = param.GetType();
-                                }
-                                parameterTypes[i - 2] = paramClass;
-                            }
-
-                            try
-                            {
-                                System.Reflection.ConstructorInfo c = cls.GetConstructor(parameterTypes);
-                                return c.Invoke(parameters.ToArray());
-                            }
-                            catch (TargetException)
-                            {
-                                foreach (System.Reflection.ConstructorInfo c in cls.GetConstructors())
-                                {
-                                    // find a constructor with the same number of parameters
-                                    if (c.GetParameters().Length == expr.Count - 2)
+                                    try
                                     {
-                                        try
-                                        {
-                                            return c.Invoke(parameters.ToArray());
-                                        }
-                                        catch (System.ArgumentException)
-                                        {
-                                            // try next constructor
-                                            continue;
-                                        }
+                                        return c.Invoke(parameters.ToArray());
+                                    }
+                                    catch (System.ArgumentException)
+                                    {
+                                        // try next constructor
+                                        continue;
                                     }
                                 }
                             }
-                            throw new System.ArgumentException(expr.ToString());
                         }
-                        catch (Exception e)
-                        {
-                            Console.WriteLine(e.ToString());
-                            //Console.Write(e.StackTrace);
-                            return null;
-                        }
+                        throw new System.ArgumentException(expr.ToString());
                     }
                     else if (code == sym_doseq.code) // (doseq (VAR SEQ) EXPR ...)
                     {
@@ -834,7 +826,7 @@ namespace Closhure
                             if (x is Symbol)
                             { // e.g. System.Math
                                 string s = x.ToString();
-                                lastImport = getClass(s);
+                                lastImport = tryGetClass(s);
                                 if (lastImport == null) // not a class (e.g. System)
                                 {
                                     if (!imports.Contains(s))
@@ -1051,7 +1043,7 @@ namespace Closhure
             }
         }
 
-        // cached. returns null if not found.
+        // cached. throws if not found.
         internal static Type getClass(string className)
         {
             if (getClassCache.TryGetValue(className, out Type s))
@@ -1083,18 +1075,20 @@ namespace Closhure
                             continue;
                         }
                     }
-                    return null;
+                    //return null;
+                    throw new TypeLoadException(className);
                 }
             }
         }
 
+        // returns null if not found
         internal static Type tryGetClass(string className)
         {
             try
             {
                 return getClass(className);
             }
-            catch (NullReferenceException)
+            catch (TypeLoadException)
             {
                 return null;
             }

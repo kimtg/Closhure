@@ -33,7 +33,7 @@ namespace Closhure
                 }
                 else
                 {
-                    Type r = Core.getClass(Symbol.symname[code]);
+                    Type r = Core.tryGetClass(Symbol.symname[code]);
                     if (r != null)
                     {
                         return r;
