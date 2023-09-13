@@ -236,6 +236,10 @@ abc
 3
 > [Closhure.Core/testProperty (. Closhure.Core -testProperty)]
 (3 3)
+> (. Closhure.Core set_testProperty 4) ; (C#'s feature) method-like: prepend set_ to property name to set
+nil
+> (. Closhure.Core get_testProperty) ; (C#'s feature) method-like: prepend get_ to property name to get
+4
 > (str (reify Object (ToString [this] (str "reified object: " this))))
 "reified object: System.Object"
 ```
