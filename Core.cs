@@ -12,7 +12,7 @@ namespace Closhure
 {
     public sealed class Core
     {
-        public const string VERSION = "0.3.1";
+        public const string VERSION = "0.3.2";
 
         // no instance
         private Core()
