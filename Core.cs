@@ -357,8 +357,7 @@ namespace Closhure
                     return n;
                 }
                 if (prefix is Symbol && ps.Length >= 3 && ps.Contains("/"))
-                { // e.g. (Math/cos 0)
-                  // (. Math cos 0)
+                { // e.g. (Math/Cos 0) -> (. Math Cos 0)
                     int sepPos = ps.IndexOf('/');
                     string head = ps.Substring(0, sepPos);
                     string tail = ps.Substring(sepPos + 1);
@@ -373,8 +372,7 @@ namespace Closhure
                     return macroexpand(newForm);
                 }
                 if (prefix is Symbol && ps.Length >= 2 && ps.StartsWith(".", StringComparison.Ordinal))
-                { // e.g. (.length "abc")
-                  // (. "abc" length)		
+                { // e.g.(.ToLower "abc") -> (. "abc" ToLower)
                     string tail = ps.Substring(1);
                     List<object> newForm = new List<object>();
                     newForm.Add(sym__dot);
@@ -659,7 +657,8 @@ namespace Closhure
                                 {
                                     // property e.g. (. "abc" -Length)
                                     System.Reflection.PropertyInfo property = cls.GetProperty(fieldName);
-                                    return property.GetValue(obj, null);
+                                    var index = expr.Skip(3);
+                                    return property.GetValue(obj, index.ToArray());
                                 }
                             }
                             catch (Exception e)
