@@ -1,4 +1,4 @@
-# The Closhure Programming Language
+# ![Closhure logo](lambdasharp.ico) The Closhure Programming Language
 
 Closhure is a dialect of Lisp. It is designed to be an embedded language (minimal Lisp for .NET Framework). It uses Clojure-like syntax.
 
