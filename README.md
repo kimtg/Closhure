@@ -244,6 +244,12 @@ nil
 4
 > (str (reify Object (ToString [this] (str "reified object: " this))))
 "reified object: System.Object"
+> (def h (new System.Collections.Hashtable))
+System.Collections.Hashtable
+> (. h Add "a" "apple")
+nil
+> [(. h -Item 0) (. h -Item "a")]
+(nil "apple")
 ```
 
 See the source code for details.
