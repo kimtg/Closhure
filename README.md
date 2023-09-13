@@ -40,6 +40,8 @@ Macros:
  defn dotimes when while
 ```
 
+[Clojure Cheatsheet](https://clojure.org/api/cheatsheet)
+
 ## Examples ##
 ### Hello, World! ###
 ```
