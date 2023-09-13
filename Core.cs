@@ -879,8 +879,7 @@ namespace Closhure
                         // interface declarations.
                         //
                         // Example:
-                        // (str (reify object
-                        //   (ToString [this] "foo")))
+                        // (str (reify Object (ToString [this] "foo")))
 
                         //throw new Exception("not implemented");
 
