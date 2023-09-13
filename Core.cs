@@ -12,7 +12,7 @@ namespace Closhure
 {
     public sealed class Core
     {
-        public const string VERSION = "0.2.4";
+        public const string VERSION = "0.2.5";
 
         // no instance
         private Core()
@@ -492,7 +492,7 @@ namespace Closhure
                         else
                         { // field
                           // host interoperability
-                          // (set! (. CLASS-OR-object -FIELD) VALUE) ; set host field or property
+                          // (set! (. CLASS-OR-object -FIELD INDEX*) VALUE) ; set host field or property. INDEX is optional (0 or more).
                             try
                             {
                                 IList<object> dl = (List<object>)dest;
@@ -520,7 +520,8 @@ namespace Closhure
                                 else
                                 {
                                     System.Reflection.PropertyInfo property = cls.GetProperty(fieldName);
-                                    property.SetValue(obj, value, null);
+                                    var index = dl.Skip(3);
+                                    property.SetValue(obj, value, index.ToArray());
                                 }
                                 return value;
                             }
@@ -628,7 +629,7 @@ namespace Closhure
                         if (methodName.StartsWith("-", StringComparison.Ordinal)) // field
                         {
                             // host interoperability
-                            // (. CLASS-OR-object -FIELD) ; get host field or property
+                            // (. CLASS-OR-object -FIELD INDEX*) ; get host field or property. INDEX is optional (0 or more).
                             try
                             {
                                 // get class
