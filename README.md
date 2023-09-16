@@ -69,8 +69,21 @@ You can use all C#'s data types.
 
 Literals:
 ```
-> (map type '(3 3L 3.0 3e3 true false nil "string" #"regex" \a :a () []))
-(System.Int32 System.Int64 System.Double System.Double System.Boolean System.Boolean nil System.String System.Text.RegularExpressions.Regex System.Char Closhure.Keyword System.Collections.Generic.List`1[[System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]] System.Collections.ArrayList)
+> (doseq (x '(3 3L 3.0 3e3 true false nil "string" #"regex" \a :a () [])) (prn x ': (type x)))
+3 : System.Int32
+3 : System.Int64
+3 : System.Double
+3000 : System.Double
+true : System.Boolean
+false : System.Boolean
+nil : nil
+"string" : System.String
+#"regex" : System.Text.RegularExpressions.Regex
+\a : System.Char
+:a : Closhure.Keyword
+() : System.Collections.Generic.List`1[[System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]
+[] : System.Collections.ArrayList
+nil
 ```
 * Characters - preceded by a backslash: \c. \newline, \space, \tab, \formfeed, \backspace, and \return yield the corresponding characters. Unicode characters are represented with \uNNNN as in C#. Octals are represented with \oNNN.
 * nil Means 'nothing/no-value'- represents C# null and tests logical false

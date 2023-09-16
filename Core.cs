@@ -12,7 +12,7 @@ namespace Closhure
 {
     public sealed class Core
     {
-        public const string VERSION = "0.4";
+        public const string VERSION = "0.5";
 
         // no instance
         private Core()
@@ -235,6 +235,20 @@ namespace Closhure
             else if (value is bool)
             {
                 return (bool)value ? "true" : "false";
+            }
+            else if (value is char)
+            {
+                switch (value)
+                {
+                    case '\n': return "\\newline";
+                    case ' ': return "\\space";
+                    case '\t': return "\\tab";
+                    case '\f': return "\\formfeed";
+                    case '\b': return "\\backspace";
+                    case '\r': return "\\return";
+                    default:
+                       return "\\" + value.ToString();
+                }
             }
             else
             {
