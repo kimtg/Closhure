@@ -21,6 +21,7 @@ namespace Closhure
                 if (lineBuffer == null) return -1;
                 lineBuffer += '\n';
             }
+            else if (lineBuffer == null) return -1;
             return lineBuffer[0];
         }
 
@@ -32,6 +33,7 @@ namespace Closhure
                 if (lineBuffer == null) return -1;
                 lineBuffer += '\n';
             }
+            else if (lineBuffer == null) return -1;
             int v = lineBuffer[0];
             lineBuffer = lineBuffer.Substring(1); // advance the position
             return v;

@@ -12,7 +12,7 @@ namespace Closhure
 {
     public sealed class Core
     {
-        public const string VERSION = "0.5";
+        public const string VERSION = "0.6";
 
         // no instance
         private Core()
@@ -1277,8 +1277,8 @@ namespace Closhure
         public static string readToken(TextReader r)
         {
             const string ws = " \t\r\n,";
-            const string delim = "()[] \t\r\n,;\"";
-            const string prefix = "()[]'`\"#";
+            const string delim = "()[] \t\r\n,;\"\\";
+            const string prefix = "()[]'`\"#\\";
 
             while (true)
             {
@@ -1357,6 +1357,21 @@ namespace Closhure
                             }
                         }
                         return acc.ToString();
+                    }
+                    else if (p == '\\') // character
+                    {
+                        StringBuilder acc1 = new StringBuilder(); // accumulator
+                                                                 // read until delim
+                        while (!eof(r))
+                        {
+                            if (delim.IndexOf(peek(r)) >= 0 && acc1.Length > 1)
+                            {
+                                break;
+                            }
+                            c = Convert.ToChar(r.Read());
+                            acc1.Append(c);
+                        }
+                        return acc1.ToString();
                     }
                     else
                     {
