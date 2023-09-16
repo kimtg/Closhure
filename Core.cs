@@ -12,7 +12,7 @@ namespace Closhure
 {
     public sealed class Core
     {
-        public const string VERSION = "0.3.2";
+        public const string VERSION = "0.4";
 
         // no instance
         private Core()
@@ -1376,13 +1376,21 @@ namespace Closhure
                     // read until delim
                     while (!eof(r))
                     {
-                        p = peek(r);
-                        if (delim.IndexOf(Convert.ToChar(p)) >= 0)
+                        if (peek(r) == '|') // a| symbol with special characters| -> a symbol with special characters
+                        {
+                            r.Read(); // opening |
+                            while ((c = Convert.ToChar(r.Read())) != '|')
+                            {
+                                acc.Append(c);
+                            }
+                        }
+
+                        if (delim.IndexOf(peek(r)) >= 0)
                         {
                             break;
                         }
                         c = Convert.ToChar(r.Read());
-                        acc.Append((char)c);
+                        acc.Append(c);
                     }
                     return acc.ToString();
                 }

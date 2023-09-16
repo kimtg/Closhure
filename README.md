@@ -151,6 +151,8 @@ true
 7
 > (symbol "a")
 a
+> 'a| symbol with special characters|
+a symbol with special characters
 ```
 
 #### Iterable
@@ -252,6 +254,10 @@ System.Collections.Hashtable
 nil
 > [(. h -Item 0) (. h -Item "a")]
 (nil "apple")
+> (new |System.Collections.Generic.List`1[System.Int32]|)
+()
 ```
+
+[Specifying types ¡¤ clojure/clojure-clr Wiki](https://github.com/clojure/clojure-clr/wiki/Specifying-types)
 
 See the source code for details.
