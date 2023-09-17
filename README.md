@@ -271,6 +271,6 @@ nil
 ()
 ```
 
-[Specifying types ¡¤ clojure/clojure-clr Wiki](https://github.com/clojure/clojure-clr/wiki/Specifying-types)
+[Specifying types Â· clojure/clojure-clr Wiki](https://github.com/clojure/clojure-clr/wiki/Specifying-types)
 
 See the source code for details.
