@@ -238,7 +238,7 @@ namespace Closhure
             }
             else if (value is char)
             {
-                switch (value)
+                switch ((char)value)
                 {
                     case '\n': return "\\newline";
                     case ' ': return "\\space";
@@ -411,7 +411,8 @@ namespace Closhure
                     }
                     return macroexpand(newForm);
                 }
-                if (prefix is Symbol && macros.TryGetValue(ps, out UserFn func))
+                UserFn func;
+                if (prefix is Symbol && macros.TryGetValue(ps, out func))
                 {
                     // build arguments
                     List<object> args = new List<object>();
@@ -1060,7 +1061,8 @@ namespace Closhure
         // cached. throws if not found.
         internal static Type getClass(string className)
         {
-            if (getClassCache.TryGetValue(className, out Type s))
+            Type s;
+            if (getClassCache.TryGetValue(className, out s))
             {
                 return s;
             }
