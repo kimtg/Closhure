@@ -12,7 +12,7 @@ namespace Closhure
 {
     public sealed class Core
     {
-        public const string VERSION = "0.6";
+        public const string VERSION = "0.7";
 
         // no instance
         private Core()
@@ -54,6 +54,7 @@ namespace Closhure
 
         static Core()
         {
+            System.Globalization.CultureInfo.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
             set("+", new Builtin._plus());
             set("-", new Builtin._minus());
             set("*", new Builtin._star());
