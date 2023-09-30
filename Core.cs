@@ -12,7 +12,7 @@ namespace Closhure
 {
     public sealed class Core
     {
-        public const string VERSION = "0.7";
+        public const string VERSION = "0.8";
 
         // no instance
         private Core()
@@ -940,6 +940,10 @@ namespace Closhure
                     else if (code == sym_quasiquote.code) // (quasiquote S-EXPRESSION)
                     {
                         return quasiquote(expr.ElementAt(1), env);
+                    }
+                    else if (code == sym_unquote.code) // (unquote X) -> (unquote X) ; to process nested quasiquotes
+                    {
+                        return expr;
                     }
                     else if (code == sym_try.code) // (try EXPR ... (catch CLASS VAR EXPR ...) ... (finally EXPR ...))
                     {
