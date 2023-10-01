@@ -12,7 +12,7 @@ namespace Closhure
 {
     public sealed class Core
     {
-        public const string VERSION = "0.8";
+        public const string VERSION = "0.9";
 
         // no instance
         private Core()
@@ -649,7 +649,7 @@ namespace Closhure
                             try
                             {
                                 // get class
-                                Type cls = tryGetClass(expr.ElementAt(1).ToString());
+                                Type cls = expr.ElementAt(1) is Symbol ? tryGetClass(expr.ElementAt(1).ToString()) : null;
                                 object obj = null;
                                 if (cls != null)
                                 {
@@ -657,7 +657,7 @@ namespace Closhure
                                 }
                                 else
                                 {
-                                    // object's method e.g. (. [1 2] Count)
+                                    // object's method e.g. (. [1 2] ToArray)
                                     obj = eval(expr.ElementAt(1), env);
                                     cls = obj.GetType();
                                 }

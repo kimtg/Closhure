@@ -210,11 +210,11 @@ Process is terminated due to StackOverflowException.
 
 ### List ###
 ```
-> (. (list 2 4 6) get 1)
+> (. (list 2 4 6) get_Item 1)
 4
 > ((list 2 4 6) 1) ; implicit indexing
 4
-> (. (list 1 2 3) size)
+> (. [1 2 3] -Count)
 3
 ```
 
