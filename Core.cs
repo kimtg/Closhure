@@ -12,7 +12,7 @@ namespace Closhure
 {
     public sealed class Core
     {
-        public const string VERSION = "0.10";
+        public const string VERSION = "0.11";
 
         // no instance
         private Core()
@@ -691,9 +691,9 @@ namespace Closhure
                         try
                         {
                             // get class
-                            Type cls = tryGetClass(expr.ElementAt(1).ToString());
+                            Type cls = expr.ElementAt(1) is Symbol ? tryGetClass(expr.ElementAt(1).ToString()) : null;
                             object obj = null;
-                            if (expr.ElementAt(1) is Symbol && cls != null)
+                            if (cls != null)
                             {
                                 // class's static method e.g. (. System.Math Floor 1.5)
                             }
