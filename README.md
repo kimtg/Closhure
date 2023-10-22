@@ -100,6 +100,8 @@ nil
 
 ### Special form ###
 ```
+> (let [a 1, b 2] (+ a b))
+3
 > (let (a 1, b 2) (+ a b)) ; , is whitespace. () and [] are interchangeable in special forms.
 3
 > (doseq [x [1 2 3]] (print x))
