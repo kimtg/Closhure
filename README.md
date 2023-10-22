@@ -102,7 +102,7 @@ nil
 ```
 > (let (a 1, b 2) (+ a b)) ; , is whitespace. () and [] are interchangeable in special forms.
 3
-> (doseq (x '(1 2 3)) (print x))
+> (doseq [x [1 2 3]] (print x))
 123nil
 ; (try EXPR ... (catch CLASS VAR EXPR ...) ... (finally EXPR ...))
 > (try (quot 1 0) (catch System.DivideByZeroException e 'c) (finally (println 'f)))
@@ -126,48 +126,48 @@ IComparer<object>
 ```
 > (def a (list 3 2 1))
 (3 2 1)
-> (. a sort a -)
+> (. a Sort -)
 nil
 > a
 (1 2 3)
 ```
 
 ```
-> ((fn (x y) (+ x y)) 1 2)
+> ((fn [x y] (+ x y)) 1 2)
 3
-> ((fn (x) (* x 2)) 3)
+> ((fn [x] (* x 2)) 3)
 6
-> (defn foo (x & more) (list x more)) ; variadic function
-(fn (x & more) (list x more))
+> (defn foo [x & more] (list x more)) ; variadic function
+(fn [x & more] (list x more))
 > (foo 1 2 3 4 5)
 (1 (2 3 4 5))
-> (defn sum (x y) (+ x y))
-(fn (x y) (+ x y))
+> (defn sum [x y] (+ x y))
+(fn [x y] (+ x y))
 > (sum 1 2)
 3
 > (fold + '(1 2 3))
 6
-> (defn even? (x) (== 0 (mod x 2)))
-(fn (x) (== 0 (mod x 2)))
+> (defn even? [x] (== 0 (mod x 2)))
+(fn [x] (== 0 (mod x 2)))
 > (even? 3)
 false
 > (even? 4)
 true
 > (apply + (list 1 2 3))
 6
-> (map (fn (x) (. System.Math Sqrt x)) (list 1 2 3 4))
+> (map (fn [x] (. System.Math Sqrt x)) (list 1 2 3 4))
 (1 1.4142135623731 1.73205080756888 2)
 > (filter even? (list 1 2 3 4 5))
 (2 4)
 > (= "abc" "abc") ; Object.equals()
 true
 > (def x 1)
-  ((fn (x) (println x) (set! x 3) (println x)) 4) ; lexical scoping
+  ((fn [x] (println x) (set! x 3) (println x)) 4) ; lexical scoping
   x
 4
 3
 1
-> (defn adder (amount) (fn (x) (+ x amount))) ; lexical scoping
+> (defn adder [amount] (fn (x) (+ x amount))) ; lexical scoping
   (def add3 (adder 3))
   (add3 4)
 7
@@ -180,7 +180,7 @@ a symbol with special characters
 #### Iterable
 apply, doseq, filter, fold, map work on System.Collections.IEnumerable.
 ```
-> (apply + (filter (fn (x) (or (== 0 (mod x 3)) (== 0 (mod x 5)))) (range 1 1000)))
+> (apply + (filter (fn [x] (or (== 0 (mod x 3)) (== 0 (mod x 5)))) (range 1 1000)))
 233168
 ```
 
@@ -189,9 +189,9 @@ Evaluates the arguments in order. Execution then jumps back to the recursion poi
 
 Warning: `recur` does not check the tail position.
 ```
-> (defn sum1 (n s) (if (< n 1) s (recur (- n 1) (+ s n))))
-> (defn sum (n) (sum1 n 0))
-> (defn sum-nonrecur (n) (if (< n 1) 0 (+ n (sum-nonrecur (- n 1)))))
+> (defn sum1 [n s] (if (< n 1) s (recur (- n 1) (+ s n))))
+> (defn sum [n] (sum1 n 0))
+> (defn sum-nonrecur [n] (if (< n 1) 0 (+ n (sum-nonrecur (- n 1)))))
 > (sum 100)
 5050
 > (sum-nonrecur 100)
@@ -201,7 +201,7 @@ Warning: `recur` does not check the tail position.
 > (sum-nonrecur 10000)
 
 Process is terminated due to StackOverflowException.
-> (loop (i 0) (when (< i 5) (print i) (recur (+ i 1))))
+> (loop [i 0] (when (< i 5) (print i) (recur (+ i 1))))
 01234nil
 ```
 
