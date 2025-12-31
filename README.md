@@ -22,9 +22,7 @@ Closhure is a dialect of Lisp. It is designed to be an embedded language (minima
 Use .sln file.
 
 ### On Stock Windows .NET Framework
-```
-C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild /p:Configuration=Release
-```
+Use `make.bat`.
 
 ## Run ##
 ```
