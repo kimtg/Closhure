@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -12,7 +12,7 @@ namespace Closhure
 {
     public sealed class Core
     {
-        public const string VERSION = "0.11";
+        public const string VERSION = "0.12";
 
         // no instance
         private Core()
@@ -308,9 +308,9 @@ namespace Closhure
             else
             {
                 // implicit indexing
-                if (func is IList<object>)
+                if (func is IList)
                 {
-                    return ((IList<object>)func)[Core.intValue(args[0])];
+                    return ((IList)func)[Core.intValue(args[0])];
                 }
                 else if (func.GetType().IsArray)
                 {
