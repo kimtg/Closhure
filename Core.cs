@@ -12,7 +12,7 @@ namespace Closhure
 {
     public sealed class Core
     {
-        public const string VERSION = "0.12";
+        public const string VERSION = "0.13";
 
         // no instance
         private Core()
@@ -318,8 +318,7 @@ namespace Closhure
                 }
                 else
                 {
-                    Console.Error.WriteLine("Unknown function: [" + func.ToString() + "]");
-                    return null;
+                    return ((dynamic)func)[Core.intValue(args[0])];
                 }
             }
         }

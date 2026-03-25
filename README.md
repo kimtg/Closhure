@@ -280,6 +280,18 @@ nil
 ()
 ```
 
+#### Regular expression example
+```
+(defn get-title [url]
+  (try
+    (let [text (slurp url)
+          m (. #"(?i)<title>(.+)</title>" Match text)]
+      (if (. m -Success) ((. m -Groups) 1) ""))
+    (catch Exception e (println e))))
+
+(println (get-title "http://www.example.com"))
+```
+
 [Specifying types · clojure/clojure-clr Wiki](https://github.com/clojure/clojure-clr/wiki/Specifying-types)
 
 See the source code for details.
