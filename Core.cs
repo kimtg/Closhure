@@ -12,7 +12,7 @@ namespace Closhure
 {
     public sealed class Core
     {
-        public const string VERSION = "0.13";
+        public const string VERSION = "0.14";
 
         // no instance
         private Core()
@@ -43,6 +43,7 @@ namespace Closhure
         internal static readonly Symbol sym_catch = new Symbol("catch");
         internal static readonly Symbol sym_finally = new Symbol("finally");
         internal static readonly Symbol sym_defmacro = new Symbol("defmacro");
+        internal static readonly Symbol sym_gen_delegate = new Symbol("gen-delegate");
 
         internal static Environment globalEnv = new Environment(); // variables. compile-time
         internal static List<string> imports = new List<string>();
@@ -1004,6 +1005,24 @@ namespace Closhure
                     {
                         macros[expr.ElementAt(1).ToString()] = new UserFn(new List<object>(expr.Skip(2)), globalEnv);
                         return null;
+                    }
+                    // return value is ignored
+                    else if (code == sym_gen_delegate.code) // (gen-delegate DelegateType [args] & body)
+                    {
+                        // 1. Get delegate type
+                        Type delegateType = getClass(expr[1].ToString());
+
+                        // 2. Create Anonymous Function (UserFn)
+                        // expr[2] is [args] and the rest is the body, so wrap it in UserFn.
+                        List<object> fnDef = new List<object>();
+                        for (int i = 2; i < expr.Count; i++)
+                        {
+                            fnDef.Add(expr[i]);
+                        }
+                        int numArgs = ((IList)expr[2]).Count;
+                        UserFn userFn = new UserFn(fnDef, env);
+                        MethodInfo invokeMethod = typeof(UserFn).GetMethod(numArgs == 0 ? "InvokeDelegate0" : "InvokeDelegate");
+                        return Delegate.CreateDelegate(delegateType, userFn, invokeMethod);
                     }
                 }
                 // evaluate arguments

@@ -292,6 +292,20 @@ nil
 (println (get-title "http://www.example.com"))
 ```
 
+#### `gen-delegate` example
+```
+(let [delegate (gen-delegate System.Threading.ThreadStart []
+                             (println "Running on a new thread!"))
+      thread (System.Threading.Thread. delegate)]
+  (.Start thread))
+```
+
+```
+(def t1 (new System.Threading.Thread (gen-delegate System.Threading.ThreadStart [] (loop (i 1) (when (<= i 10) (print "" i) (recur (+ i 1)))))))
+(def t2 (new System.Threading.Thread (gen-delegate System.Threading.ThreadStart [] (loop (i 1) (when (<= i 10) (print "" i) (recur (+ i 1)))))))
+(. t1 Start) (. t2 Start) (. t1 Join) (. t2 Join)
+```
+
 [Specifying types · clojure/clojure-clr Wiki](https://github.com/clojure/clojure-clr/wiki/Specifying-types)
 
 See the source code for details.

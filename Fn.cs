@@ -57,5 +57,17 @@ namespace Closhure
                 return null;
             }
         }
+
+        public void InvokeDelegate(params object[] args)
+        {
+            Invoke(new List<object>(args));
+        }
+
+        // to invoke a delegate with no arguments, to avoid ambiguity with the params version
+        public void InvokeDelegate0()
+        {
+            Invoke(new List<object>());
+        }
+
     }
 }
