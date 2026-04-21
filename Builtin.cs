@@ -719,13 +719,16 @@ namespace Closhure
                     case 2:
                         {
                             List<object> r = new List<object>();
-                            for (double i = Convert.ToDouble(args[0]); i < Convert.ToDouble(args[1]); i++) r.Add(i);
+                            double end = Convert.ToDouble(args[1]);
+                            for (double i = Convert.ToDouble(args[0]); i < end; i++) r.Add(i);
                             return r;
                         }
                     case 3:
                         {
                             List<object> r = new List<object>();
-                            for (double i = Convert.ToDouble(args[0]); i < Convert.ToDouble(args[1]); i += Convert.ToDouble(args[2])) r.Add(i);
+                            double end = Convert.ToDouble(args[1]);
+                            double step = Convert.ToDouble(args[2]);
+                            for (double i = Convert.ToDouble(args[0]); i < end; i += step) r.Add(i);
                             return r;
                         }
                     default:
